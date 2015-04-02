@@ -7,6 +7,8 @@ function setup_wordpress() {
   easy_install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
   yum -y install httpd mysql-server
   yum -y install php php-mysql php-mbstring php-gd
+  chkconfig httpd on
+  chkconfig mysqld on
 
   # Create Database User
   service mysqld start
