@@ -1,0 +1,15 @@
+name:             "wordpress_pattern"
+maintainer:       "TIS Inc."
+maintainer_email: "takahashi.kazuya@tis.co.jp"
+license:          "Apache v2.0"
+description:      "Install WordPress"
+version:          "0.0.1"
+url:              "https://github.com/kz-takahashi/wordpress_pattern"
+
+type:      "platform"
+depends:   []
+conflicts: []
+
+supports:
+  - os: "centos"
+    version: "= 6.5"
