@@ -6,7 +6,7 @@ set -o pipefail
 role=$1
 event=$2
 
-if [ "${role}" == "all-in-one-wordpress" ]; then
+if [ "${role}" == "wordpress" ]; then
   if [ "${event}" == "setup" ]; then
     setup_wordpress
   elif [ "${event}" == "configure" ]; then

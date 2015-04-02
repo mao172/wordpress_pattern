@@ -40,12 +40,12 @@
       "AllowedPattern" : "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
       "ConstraintDescription" : "must be a valid IP CIDR range of the form x.x.x.x/x."
     },
-    "AllInOneWordpressInstanceType" : {
+    "WordpressInstanceType" : {
       "Description" : "WordPressServer instance type",
       "Type" : "String",
       "Default" : "t2.small"
     },
-    "AllInOneWordpressImageId" : {
+    "WordpressImageId" : {
       "Description" : "[computed] WordPressServer Image Id. This parameter is automatically filled by CloudConductor.",
       "Type" : "String"
     },
@@ -111,14 +111,14 @@
     "WordPressServer" : {
       "Type" : "AWS::EC2::Instance",
       "Metadata" : {
-        "Role" : "all-in-one-wordpress",
+        "Role" : "wordpress",
         "Frontend" : "true",
         "AWS::CloudFormation::Init": {
           "config": {
             "files": {
               "/opt/cloudconductor/config": {
                 "content": { "Fn::Join": [ "", [
-                  "ROLE=all-in-one-wordpress\n",
+                  "ROLE=wordpress\n",
                   "STACK_NAME=",  { "Ref": "AWS::StackName" }, "\n",
                   "RESOURCE_NAME=WordPressServer\n",
                   "REGION=", { "Ref": "AWS::Region" }, "\n"
@@ -138,8 +138,8 @@
         }
       },
       "Properties" : {
-        "ImageId" : { "Ref" : "AllInOneWordpressImageId" },
-        "InstanceType" : { "Ref" : "AllInOneWordpressInstanceType" },
+        "ImageId" : { "Ref" : "WordpressImageId" },
+        "InstanceType" : { "Ref" : "WordpressInstanceType" },
         "KeyName" : { "Ref" : "KeyName" },
         "NetworkInterfaces" : [{
            "DeviceIndex" : "0",
@@ -168,7 +168,7 @@
           "done\n",
           "error_exit 'Failed to join the consul cluster.'\n"
         ]]}},
-        "Tags" : [{"Key": "Name", "Value": "WordPressServer"}, {"Key": "Role", "Value": "all-in-one-wordpress"}]
+        "Tags" : [{"Key": "Name", "Value": "WordPressServer"}, {"Key": "Role", "Value": "wordpress"}]
       }
     },
     "WordPressNetworkInterface" : {
