@@ -81,6 +81,13 @@ function configure_wordpress() {
   update_apache_virtual_host
 }
 
-# function spec_wordpress() {
-#   not implemented yet
-# }
+function spec_wordpress() {
+  # it should response 200 OK
+  load_cfn_parameters
+  status_code=`curl -sLI "${WordPressUrl}" -o /dev/null -w '%{http_code}\n'`
+  if [ "${status_code}" != "200" ]; then
+    echo "URL: '${WordPressUrl}' returns ${status_code}" 1>&2
+    curl "${WordPressUrl}" 1>&2
+    exit 1
+  fi
+}
