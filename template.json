@@ -115,15 +115,19 @@
         "Frontend" : "true",
         "AWS::CloudFormation::Init": {
           "config": {
-            "files": {
-              "/opt/cloudconductor/config": {
-                "content": { "Fn::Join": [ "", [
+            "commands": {
+              "edit_config": {
+                "command": { "Fn::Join": [ "", [
+                  "cat >> /opt/cloudconductor/config <<EOF\n",
                   "ROLE=wordpress\n",
-                  "STACK_NAME=",  { "Ref": "AWS::StackName" }, "\n",
+                  "STACK_NAME=", { "Ref": "AWS::StackName" }, "\n",
                   "RESOURCE_NAME=WordPressServer\n",
-                  "REGION=", { "Ref": "AWS::Region" }, "\n"
+                  "REGION=", { "Ref": "AWS::Region" }, "\n",
+                  "EOF"
                 ]]}
-              },
+              }
+            },
+            "files": {
               "/opt/cloudconductor/cfn_parameters": {
                 "content": { "Fn::Join": [ "", [
                   "WordPressUrl=", { "Ref": "WordPressUrl" }, "\n",
