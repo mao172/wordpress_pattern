@@ -130,11 +130,11 @@
             "files": {
               "/opt/cloudconductor/cfn_parameters": {
                 "content": { "Fn::Join": [ "", [
-                  "WordPressUrl=", { "Ref": "WordPressUrl" }, "\n",
-                  "WordPressTitle=", { "Ref": "WordPressTitle" }, "\n",
-                  "WordPressAdminUser=", { "Ref": "WordPressAdminUser" }, "\n",
-                  "WordPressAdminPassword=", { "Ref": "WordPressAdminPassword" }, "\n",
-                  "WordPressAdminEmail=", { "Ref": "WordPressAdminEmail" }, "\n"
+                  "WordPressUrl='", { "Ref": "WordPressUrl" }, "'\n",
+                  "WordPressTitle='", { "Ref": "WordPressTitle" }, "'\n",
+                  "WordPressAdminUser='", { "Ref": "WordPressAdminUser" }, "'\n",
+                  "WordPressAdminPassword='", { "Ref": "WordPressAdminPassword" }, "'\n",
+                  "WordPressAdminEmail='", { "Ref": "WordPressAdminEmail" }, "'\n"
                 ]]}
               }
             }
