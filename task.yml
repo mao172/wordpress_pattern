@@ -1,0 +1,97 @@
+#
+# CloudConductor Pattern:: wordpress_pattern
+# Name:: task.yml
+#
+# Copyright 2015, TIS Inc.
+#
+# All rights reserved - Do Not Redistribute
+#
+
+#
+# Environments
+#
+environments:
+  HOME: /root
+  PATH: $PATH:/opt/chefdk/embedded/bin:/opt/chef/embedded/bin:/usr/bin
+  ROLE: '{{config.role}}'
+  CONSUL_SECRET_KEY: '{{config.token}}'
+
+#
+# Variables
+#
+# be defined the key-value map to use in this task.yml file.
+#
+# variables:
+
+#
+# Default
+#
+# be defined the default value of parameters.
+#
+default:
+  timeout: 1800
+  chef:
+    attribute_keys:
+      - cloudconductor
+
+#
+# Events
+#
+events:
+  setup:
+    description: Execute setup
+    task: setup_wordpress
+
+  configure:
+    description: Execute configure
+    task: configure_wordpress
+
+  deploy:
+    description: Execute deploy
+    task: dummy
+
+  backup:
+    description: Execute backup
+    task: dummy
+
+  restore:
+    description: Execute restore
+    task: dummy
+
+  spec:
+    description: Execute spec
+    task: spec_wordpress
+
+#
+# Tasks
+#
+tasks:
+  dummy:
+    description: Execute dummy
+    operations:
+      - execute:
+          file: dummy.sh
+
+  prepare:
+    description: Execute prepare
+    operations:
+      - execute:
+          file: prepare.sh
+
+  setup_wordpress:
+    description: Execute setup
+    operations:
+      - execute:
+          file: setup_wordpress.sh
+
+  configure_wordpress:
+    description: Execute configure
+    operations:
+      - execute:
+          file: configure_wordpress.sh
+
+  spec_wordpress:
+    description: Execute serverspec
+    operations:
+      - execute:
+          file: spec_wordpress.sh
