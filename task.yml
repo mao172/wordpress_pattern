@@ -40,27 +40,27 @@ default:
 events:
   setup:
     description: Execute setup
-    task: setup_wordpress
+    task: setup_task
 
   configure:
     description: Execute configure
-    task: configure_wordpress
+    task: configure_task
 
   deploy:
     description: Execute deploy
-    task: dummy
+    task: deploy_task
 
   backup:
     description: Execute backup
-    task: dummy
+    task: backup_task
 
   restore:
     description: Execute restore
-    task: dummy
+    task: restore_task
 
   spec:
     description: Execute spec
-    task: spec_wordpress
+    task: spec_task
 
 #
 # Tasks
@@ -78,19 +78,37 @@ tasks:
       - execute:
           file: prepare.sh
 
-  setup_wordpress:
+  setup_task:
     description: Execute setup
     operations:
       - execute:
           file: setup_wordpress.sh
 
-  configure_wordpress:
+  configure_task:
     description: Execute configure
     operations:
       - execute:
           file: configure_wordpress.sh
 
-  spec_wordpress:
+  deploy_task:
+    description: Execute deploy
+    operations:
+      - execute:
+          script: echo "not implemented yet!"
+
+  backup_task:
+    description: Execute backup
+    operations:
+      - execute:
+          script: echo "do nothing"
+
+  restore_task:
+    description: Execute restore
+    operations:
+      - execute:
+          script: echo "do nothing"
+
+  spec_task:
     description: Execute serverspec
     operations:
       - execute:
