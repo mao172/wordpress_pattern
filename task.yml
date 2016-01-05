@@ -82,7 +82,8 @@ tasks:
     description: Execute setup
     operations:
       - execute:
-          script: ./event_handler.sh {{role}} setup
+          file: setup_wordpress.sh
+        #          script: ./event_handler.sh {{role}} setup
 
   configure_task:
     description: Execute configure
