@@ -3,6 +3,9 @@ set -o pipefail
 [ -f lib/functions.sh ] && source lib/functions.sh
 [ -f lib/events.sh ] && source lib/events.sh
 
+id
+ls -al ~/
+
 role=$1
 event=$2
 

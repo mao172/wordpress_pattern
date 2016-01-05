@@ -1,17 +1,30 @@
 #!/bin/sh
 
 function setup_wordpress() {
+  local dbname=mysql
+  local dbsvcname=mysqld
+  if [ "$(os_version)" == "7" ]; then
+    dbname=mariadb
+    dbsvcname=mariadb
+  fi
+
   # Install dependencies
   yum -y update
   yum -y install python-setuptools
   easy_install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
-  yum -y install httpd mysql-server
+  yum -y install httpd ${dbname}-server
   yum -y install php php-mysql php-mbstring php-gd
-  chkconfig httpd on
-  chkconfig mysqld on
+  service_ctl enable httpd
+  service_ctl enable ${dbsvcname}
 
   # Create Database User
-  service mysqld start
+  service_ctl start ${dbsvcname}
+  if [ ! -f /var/lib/mysql/mysql.sock ]; then
+    touch /var/lib/mysql/mysql.sock
+    chown mysql:mysql /var/lib/mysql
+    service_ctl restart ${dbsvcname}
+  fi
+
   if [ -f ~/.wordpress_mysql_password ]; then
     wordpress_mysql_password=`cat ~/.wordpress_mysql_password`
   else
@@ -66,11 +79,11 @@ function update_apache_virtual_host() {
   ServerName "${server_name}"
 </VirtualHost>
 EOF
-    service httpd status
+    service_ctl status httpd
     if [ $? -eq 0 ]; then
-      service httpd reload
+      service_ctl reload httpd
     else
-      service httpd restart
+      service_ctl restart httpd
     fi
   fi
 }
@@ -85,10 +98,10 @@ function configure_wordpress() {
 
 function spec_wordpress() {
   # it should response 200 OK
-  status_code=`curl -sLI http://localhost/ -o /dev/null -w '%{http_code}\n'`
+  status_code=`curl -sLI --noproxy localhost http://localhost/ -o /dev/null -w '%{http_code}\n'`
   if [ "${status_code}" != "200" ]; then
     echo "localhost:80 returns ${status_code}" 1>&2
-    curl http://localhost/
+    curl --noproxy localhost http://localhost/
     exit 1
   fi
 }
