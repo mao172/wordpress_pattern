@@ -28,7 +28,7 @@ function setup_wordpress() {
   if [ -f ~/.wordpress_mysql_password ]; then
     wordpress_mysql_password=`cat ~/.wordpress_mysql_password`
   else
-    wordpress_mysql_password=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1`
+    wordpress_mysql_password=`head -c16 /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1`
     echo $wordpress_mysql_password > ~/.wordpress_mysql_password
   fi
   mysql -u root -e "CREATE DATABASE wordpress CHARACTER SET utf8;"
