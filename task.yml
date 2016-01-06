@@ -82,13 +82,13 @@ tasks:
     description: Execute setup
     operations:
       - execute:
-          script: ./event_handler.sh {{role}} setup
+          script: ./scripts/setup_wordpress.sh {{role}}
 
   configure_task:
     description: Execute configure
     operations:
       - execute:
-          script: ./event_handler.sh {{role}} configure
+          script: ./scripts/configure_wordpress.sh {{role}}
 
   deploy_task:
     description: Execute deploy
@@ -112,4 +112,4 @@ tasks:
     description: Execute serverspec
     operations:
       - execute:
-          script: ./event_handler.sh {{role}} spec
+          script: ./scripts/spec_wordpress.sh {{role}}
